@@ -1,0 +1,37 @@
+.courses {
+  width: 1280px;
+  margin: 15px auto 0 auto;
+  background: #FFF;
+  .list {
+    margin: 0;
+    padding: 0 0 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    .item {
+      width: 20%;
+      margin-top: 10px;
+      .img {
+        display: block;
+        width: 240px;
+        height: 180px;
+        margin: 0 auto;
+      }
+      .title {
+        margin: 0;
+        padding: 0 10px;
+        line-height: 32px;
+        font-size: 16px;
+        font-weight: normal;
+      }
+      .desc {
+        margin: 0;
+        padding: 0 10px;
+        line-height: 24px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #777;
+      }
+    }
+  }
+}

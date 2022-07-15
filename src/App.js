@@ -1,5 +1,5 @@
 import 'normalize.css';
-// import './style.scss'
+import './style.scss'
 // import styles from './style.module.scss';
 // <div className={styles.app}>hello, Dell!</div>
 
