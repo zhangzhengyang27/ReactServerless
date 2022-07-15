@@ -1,4 +1,5 @@
 import styles from './style.module.scss';
+// eslint-disable-next-line
 import courseImage from './course.jpeg';
 
 const Courses = () => {
