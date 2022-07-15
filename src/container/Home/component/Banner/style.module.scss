@@ -1,0 +1,44 @@
+.banner {
+  position: relative;
+  /*图片是2560*760，多出来的150px是放置头像的*/
+  width: 1280px;
+  height: 530px;
+  margin: 0 auto;
+  background-image: url('./bg.jpeg');
+  background-repeat: no-repeat;
+  /* 不让背景图被拉伸的属性*/
+  background-size: contain;
+  border: 1px solid #ccc;
+
+  .person {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+
+    .avatar {
+      //position: absolute;脱离了文档流
+      position: absolute;
+      top: -70px;
+      left: 40px;
+      width: 200px;
+      height: 200px;
+      border-radius: 20px;
+    }
+
+    .title {
+      line-height: 50px;
+      margin-left: 280px;
+      font-size: 28px;
+      color: #000;
+    }
+
+    .description {
+      line-height: 32px;
+      margin-left: 280px;
+      font-size: 18px;
+      color: #333;
+    }
+  }
+}
