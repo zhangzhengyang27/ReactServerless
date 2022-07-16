@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'normalize.css';
+import 'antd/dist/antd.css';
+import HomeManagement from './container/HomeManagement';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <div>admin page</div>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <HomeManagement />
+    </React.StrictMode>,
+    document.getElementById('root')
 );
+
