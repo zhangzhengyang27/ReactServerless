@@ -2,7 +2,7 @@ import styles from './style.module.scss';
 
 const Courses = () => {
   return (
-    <div className={styles.courses}>
+    <div className="wrapper">
       <ul className={styles.list}>
         <li className={styles.item}>
           <img className={styles.img} src="https://serverless-project-static-files.oss-cn-beijing.aliyuncs.com/images/vue3.png" alt="Vue3 系统入门与项目实战" />

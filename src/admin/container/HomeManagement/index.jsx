@@ -1,69 +1,45 @@
-import {useState} from 'react';
-import {Layout, Menu} from 'antd';
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
+import { useState } from 'react';
+import { Layout, Menu } from 'antd';
 import styles from './style.module.scss';
 
-const {Header, Sider, Content} = Layout;
+const { Header, Sider, Content } = Layout;
 
-// hook语法h好处就是不存在this指向的问题
+const useCollapsed = () => {
+  const [ collapsed, setCollapsed ]  = useState(false);
+  const toggleCollapsed = () => { setCollapsed(!collapsed) };
+  return { collapsed, toggleCollapsed }
+}
+
 const HomeManagement = () => {
-    // const returnValue = useState(false);
-    // const collapsed=returnValue[0];
-    // const setCollapsed=returnValue[0];
+  const { collapsed, toggleCollapsed } = useCollapsed();
+  const handleHomePageRedirect = () => {window.location.href = "/"}
 
-    // 代替上面的语法
-    const [collapsed, setCollapsed] = useState(false);
-    const toggle = () => {
-        setCollapsed(!collapsed)
-    };
-    const handleHomePageRedirect = () => {
-        window.location.href = "/"
-    }
-
-    return (
-        <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="logo"/>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" icon={<UserOutlined/>}>
-                        首页内容管理
-                    </Menu.Item>
-                    <Menu.Item
-                        key="2"
-                        icon={<VideoCameraOutlined/>}
-                        onClick={handleHomePageRedirect}
-                    >
-                        返回用户页面
-                    </Menu.Item>
-                </Menu>
-            </Sider>
-            <Layout className="site-layout">
-                <Header className="site-layout-background" style={{padding: 0}}>
-                    {/*  点击变换图标*/}
-                    {
-                        collapsed
-                            ? <MenuUnfoldOutlined className={styles.trigger} onClick={toggle}/>
-                            : <MenuFoldOutlined className={styles.trigger} onClick={toggle}/>
-                    }
-                </Header>
-                <Content
-                    className="site-layout-background"
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 1000,
-                    }}
-                >
-                    Content
-                </Content>
-            </Layout>
-        </Layout>
-    );
+  return (
+    <Layout>
+      <Sider className={styles.sidebar} trigger={null} collapsible collapsed={collapsed}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['admin-home']}>
+          <Menu.Item key="admin-home">
+            <span className="iconfont">&#xe64d;</span>首页内容管理
+          </Menu.Item>
+          <Menu.Item key="admin-back" onClick={handleHomePageRedirect}>
+          <span className="iconfont">&#xe601;</span>返回用户页面
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      <Layout>
+        <Header className={styles.header}>
+          {
+            collapsed
+              ? <span className='iconfont' onClick={toggleCollapsed}>&#xe62c;</span>
+              : <span className='iconfont' onClick={toggleCollapsed}>&#xe629;</span>
+          }
+        </Header>
+        <Content className={styles.content}>
+          Content
+        </Content>
+      </Layout>
+    </Layout>
+  );
 }
 
 export default HomeManagement;

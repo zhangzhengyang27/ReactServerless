@@ -1,8 +1,6 @@
 .banner {
   position: relative;
-  width: 1280px;
   height: 530px;
-  margin: 0 auto;
   background-image: url('https://serverless-project-static-files.oss-cn-beijing.aliyuncs.com/images/bg.jpeg');
   background-repeat: no-repeat;
   background-size: contain;
@@ -12,7 +10,6 @@
     left: 0;
     right: 0;
     height: 150px;
-    background: #FFF;
     .avatar {
       position: absolute;
       top: -70px;
