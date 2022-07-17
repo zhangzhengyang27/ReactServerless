@@ -6,9 +6,6 @@ import HomeManagement from './container/HomeManagement';
 import './style.scss';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <HomeManagement/>
-    </React.StrictMode>,
-    document.getElementById('root')
+  <HomeManagement />,
+  document.getElementById('root')
 );
-

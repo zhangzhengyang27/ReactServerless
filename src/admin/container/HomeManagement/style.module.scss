@@ -18,9 +18,13 @@
   min-height: 1000px;
 }
 
-.save {
+.buttons {
   padding-top: 20px;
   margin-top: 20px;
   border-top: 1px dashed #ccc;
   text-align: center;
+  .reset {
+    margin-left: 20px;
+  }
 }
+

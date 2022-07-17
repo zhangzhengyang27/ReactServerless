@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { Layout, Menu, Button } from 'antd';
 import AreaList from './component/AreaList';
-import PageSetting from './component/PageSetting';
+import { parseJsonByString } from '../../../common/utils';
 import styles from './style.module.scss';
 
 const { Header, Sider, Content } = Layout;
+
+const initialSchema = parseJsonByString(window.localStorage.schema, {});
 
 const useCollapsed = () => {
   const [ collapsed, setCollapsed ]  = useState(false);
@@ -14,33 +16,19 @@ const useCollapsed = () => {
 
 const HomeManagement = () => {
   const { collapsed, toggleCollapsed } = useCollapsed();
+  const [ schema, setSchema ] = useState(initialSchema);
   const handleHomePageRedirect = () => {window.location.href = "/"}
-  const pageSettingRef = useRef();
   const areaListRef = useRef();
 
   const handleSaveBtnClick = () => {
-    const schema = {
-      name: 'Page',
-      attributes: {},
-      children: [{
-        name: 'Banner',
-        attributes: {
-          title: pageSettingRef.current.title,
-          description: pageSettingRef.current.description
-        }
-      }, {
-        name: 'CourseList'
-      },{
-        name: 'Footer'
-      }]
-    };
-    areaListRef.current.list.forEach(item => {
-      schema.children.push({
-        name: 'Area'
-      })
-    });
-    const schemaStr = JSON.stringify(schema);
-    window.localStorage.schema = schemaStr;
+    const { getSchema } = areaListRef.current;
+    const schema = { name: 'Page', attributes: {}, children: getSchema() }
+    window.localStorage.schema = JSON.stringify(schema);
+  }
+
+  const handleResetBtnClick = () => {
+    const newSchema = parseJsonByString(window.localStorage.schema, {});
+    setSchema(newSchema);
   }
 
   return (
@@ -64,10 +52,10 @@ const HomeManagement = () => {
           }
         </Header>
         <Content className={styles.content}>
-          <PageSetting ref={pageSettingRef} />
-          <AreaList ref={areaListRef} />
-          <div className={styles.save}>
+          <AreaList ref={areaListRef} children={schema.children || []}/>
+          <div className={styles.buttons}>
             <Button type="primary" onClick={handleSaveBtnClick}>保存区块配置</Button>
+            <Button type="primary" className={styles.reset} onClick={handleResetBtnClick}>重置区块配置</Button>
           </div>
         </Content>
       </Layout>

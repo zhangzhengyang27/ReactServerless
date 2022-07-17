@@ -1,16 +1,13 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
 import { Input } from 'antd';
-import { parseJsonByString } from '../../../../../common/utils'
 import styles from './style.module.scss';
 
 const { TextArea } = Input;
 
-const schema = parseJsonByString(window.localStorage?.schema, {})
-
 const PageSetting = (props, ref) => {
-  const [title, setTitle] = useState(schema?.children?.[0]?.attributes?.title || '');
-  const [description, setDescription] = useState(schema?.children?.[0]?.attributes?.description || '');
-
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   }
@@ -19,7 +16,6 @@ const PageSetting = (props, ref) => {
     setDescription(e.target.value);
   }
 
-  // 父子组件的传值
   useImperativeHandle(ref, () => {
     return { title, description }
   });
