@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'antd';
+import axios from 'axios';
 import AreaList from './component/AreaList';
 import { parseJsonByString } from '../../../common/utils';
 import styles from './style.module.scss';
@@ -18,11 +19,16 @@ const HomeManagement = () => {
   const { schema, changeSchema } = useStore();
 
   const handleSaveBtnClick = () => {
-    window.localStorage.schema = JSON.stringify(schema);
+    axios.post('/api/schema/save', {
+      schema: JSON.stringify(schema)
+    }).then(() => {})
   }
 
   const handleResetBtnClick = () => {
-    changeSchema(parseJsonByString(window.localStorage.schema, {}))
+    axios.get('/api/schema/getLatestOne').then((response) => {
+      const data = response?.data?.data;
+      data && changeSchema(parseJsonByString(data.schema, {}));
+    });
   }
 
   return (

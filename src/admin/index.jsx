@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider, useSelector, useDispatch } from 'react-redux';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { Provider } from 'react-redux';
+import axios from 'axios';
+import { parseJsonByString } from '../common/utils';
 import store from './store';
+import { getChangeSchemaAction } from './store/action'
 import HomeManagement from './container/HomeManagement';
 import BasicSetting from './container/BasicSetting';
 import styles from './style.module.scss';
@@ -20,9 +23,25 @@ const useCollapsed = () => {
   return { collapsed, toggleCollapsed }
 }
 
+const useStore = () => {
+  const dispatch = useDispatch();
+  const changeSchema = (schema) => {
+    dispatch(getChangeSchemaAction(schema));
+  }
+  return { changeSchema };
+}
+
 const Wrapper = () => {
   const handleHomePageRedirect = () => {window.location.href = "/"}
   const { collapsed, toggleCollapsed } = useCollapsed();
+  const { changeSchema } = useStore();
+
+  useEffect(() => {
+    axios.get('/api/schema/getLatestOne').then((response) => {
+      const data = response?.data?.data;
+      data && changeSchema(parseJsonByString(data.schema, {}));
+    });
+  }, [changeSchema]);
 
   return (
     <Router>
@@ -31,16 +50,19 @@ const Wrapper = () => {
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['admin-home']}>
             <Menu.Item key="admin-home">
               <Link to="/">
-                <span className="iconfont">&#xe64d;</span>首页内容管理
+                <span className="iconfont">&#xe64d;</span>{
+                  !collapsed?"首页内容管理":null}
               </Link>
             </Menu.Item>
             <Menu.Item key="admin-setting">
               <Link to="/setting">
-                <span className="iconfont">&#xe64d;</span>基础内容配置
+                <span className="iconfont">&#xe64d;</span>{
+                !collapsed?"基础内容配置":null}
               </Link>
             </Menu.Item>
             <Menu.Item key="admin-back" onClick={handleHomePageRedirect}>
-              <span className="iconfont">&#xe601;</span>返回用户页面
+              <span className="iconfont">&#xe601;</span>{
+              !collapsed?"返回用户页面":null}
             </Menu.Item>
           </Menu>
         </Sider>
