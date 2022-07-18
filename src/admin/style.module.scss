@@ -1,0 +1,19 @@
+.sidebar {
+  padding: 10px 0;
+  :global(.iconfont) {
+    margin-right: 10px;
+  }
+}
+
+.header {
+  padding: 0 20px;
+  :global(.iconfont) {
+    color: #FFF;
+    cursor: pointer;
+  }
+}
+
+.content {
+  padding: 20px;
+  min-height: 1000px !important;
+}

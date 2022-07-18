@@ -1,3 +1,13 @@
+.row {
+  display: flex;
+  .title {
+    width: 100px;
+    line-height: 32px;
+  }
+  .content {
+    flex: 1;
+  }
+}
 .buttons {
   padding-top: 20px;
   margin-top: 20px;

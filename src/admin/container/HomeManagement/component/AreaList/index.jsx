@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { SortableContainer } from 'react-sortable-hoc';
-import { getAddPageChildrenAction, getChangePageChildPositionAction } from '../../store/action';
+import { getAddPageChildrenAction, getChangePageChildPositionAction } from '../../../../store/action';
 import AreaItem from '../AreaItem';
 
 import styles from './style.module.scss';
@@ -18,7 +18,7 @@ const SortableList = SortableContainer(({ list }) => {
 
 const AreaList = () => {
   const dispatch = useDispatch();
-  const children = useSelector((state) => state.homeManagement.schema?.children || []);
+  const children = useSelector((state) => state.common.schema?.children || []);
 
   const addPageChildren = () => {
     dispatch(getAddPageChildrenAction())

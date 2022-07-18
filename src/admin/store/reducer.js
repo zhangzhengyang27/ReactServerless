@@ -1,8 +1,8 @@
 import { produce, original } from 'immer';
-import { parseJsonByString } from '../../../../common/utils';
+import { parseJsonByString } from '../../common/utils';
 import { 
   CHANGE_SCHEMA, ADD_PAGE_CHILDREN, CHANGE_PAGE_CHILD,
-  DELETE_PAGE_CHILD, CHANGE_PAGE_CHILD_POSITION,
+  DELETE_PAGE_CHILD, CHANGE_PAGE_CHILD_POSITION, CHANGE_PAGE_ATTRIBUTE,
 } from './constant'
 
 const initialSchema = parseJsonByString(window.localStorage.schema, {
@@ -28,6 +28,9 @@ const reducer = (state = defaultState, action) => produce(state, (draft) => {
       break;
     case DELETE_PAGE_CHILD:
       draft.schema.children.splice(action.index, 1);
+      break;
+    case CHANGE_PAGE_ATTRIBUTE:
+      draft.schema.attributes[action.key] = action.value;
       break;
     case CHANGE_PAGE_CHILD_POSITION:
       const copy = original(draft.schema.children);

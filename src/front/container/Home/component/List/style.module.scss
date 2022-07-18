@@ -7,11 +7,16 @@
   .item {
     width: 20%;
     margin-top: 10px;
+    .link {
+      color: #333;
+      text-decoration: none;
+    }
     .img {
       display: block;
       width: 240px;
-      height: 180px;
+      height: 135px;
       margin: 0 auto;
+      border-radius: 10px;
     }
     .title {
       overflow: hidden;

@@ -1,14 +1,29 @@
 import styles from './style.module.scss';
 
-const Footer = () => {
+const Footer = ({ schema }) => {
+  const { attributes = {}, children = [] } = schema;
+  const { copyright, record } = attributes;
   return (
     <div className="wrapper">
       <div className={styles.footer}>
         <ul className={styles.list}>
-          <li className={styles.item}>
-            <a className={styles.link} href="/admin.html">进入管理页面</a>
-          </li>
+        {
+          children.map((item, index) => {
+            const { attributes = {} } = item;
+            const { title, link } = attributes;
+            return (
+              <li className={styles.item} key={index}>
+                <a className={styles.link} href={link} target="_blank" rel="noreferrer">
+                  {title}
+                </a>
+              </li>
+            )
+          })
+        }
         </ul>
+        <div className={styles.copyright}>
+          {copyright} {record}
+        </div>
       </div>
     </div>
   );
