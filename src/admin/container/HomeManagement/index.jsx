@@ -1,32 +1,23 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'antd';
-import axios from 'axios';
+import request from '../../../common/request';
 import AreaList from './component/AreaList';
+import { useSchemaData } from '../../hook/useSchemaData';
 import { parseJsonByString } from '../../../common/utils';
 import styles from './style.module.scss';
-import { getChangeSchemaAction } from '../../store/action';
 
-const useStore = () => {
-  const dispatch = useDispatch();
-  const schema = useSelector((state) => state.common.schema);
-  const changeSchema = (schema) => {
-    dispatch(getChangeSchemaAction(schema));
-  }
-  return { schema, changeSchema };
-}
 
 const HomeManagement = () => {
-  const { schema, changeSchema } = useStore();
+  const { schema, changeSchema } = useSchemaData();
 
   const handleSaveBtnClick = () => {
-    axios.post('/api/schema/save', {
+    request.post('/api/schema/save', {
       schema: JSON.stringify(schema)
     }).then(() => {})
   }
 
   const handleResetBtnClick = () => {
-    axios.get('/api/schema/getLatestOne').then((response) => {
-      const data = response?.data?.data;
+    request.get('/api/schema/getLatestOne').then((response) => {
+      const data = response?.data;
       data && changeSchema(parseJsonByString(data.schema, {}));
     });
   }

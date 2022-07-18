@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal, Select } from 'antd';
 import { SortableElement } from 'react-sortable-hoc';
 import { cloneDeep } from 'lodash';
-import { getChangePageChildAction, getDeletePageChildAction } from '../../../../store/action';
+import { useSchemaData } from '../../../../hook/useSchemaData';
 import Banner from './component/Banner';
 import List from './component/List';
 import Footer from './component/Footer';
@@ -12,21 +11,9 @@ import styles from './style.module.scss';
 const { Option } = Select;
 const map = { Banner, List, Footer };
 
-const useStore = (index) => {
-  const dispatch = useDispatch();
-  const pageChild = useSelector((state) => state.common.schema.children?.[index] || {});
-  const changePageChild = (temp) => {
-    dispatch(getChangePageChildAction(index, temp));
-  }
-  const removePageChild = () => {
-    dispatch(getDeletePageChildAction(index));
-  }
-  return { pageChild, changePageChild, removePageChild };
-}
-
 const AreaItem = (props) => {
   const { value: index } = props;
-  const { pageChild, changePageChild, removePageChild } = useStore(index);
+  const { pageChild, changePageChild, removePageChild } = useSchemaData(index);
   
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ tempPageChild, setTempPageChild ] = useState(cloneDeep(pageChild));

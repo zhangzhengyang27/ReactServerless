@@ -1,36 +1,26 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { Button, Input } from 'antd';
-import axios from 'axios';
+import request from '../../../common/request';
+import { useSchemaData } from '../../hook/useSchemaData';
 import { parseJsonByString } from '../../../common/utils';
 import styles from './style.module.scss';
-import { getChangeSchemaAction, getChangePageAttributeAction } from '../../store/action';
-
-const useStore = () => {
-  const dispatch = useDispatch();
-  const schema = useSelector((state) => state.common.schema);
-  const changeSchema = (schema) => {
-    dispatch(getChangeSchemaAction(schema));
-  }
-  const changePageAttribute = (key, value) => {
-    dispatch(getChangePageAttributeAction(key, value));
-  }
-  return { schema, changeSchema, changePageAttribute };
-}
 
 const BasicSetting = () => {
-  const { schema = {}, changeSchema, changePageAttribute } = useStore();
+  const { schema = {}, changeSchema, changePageAttribute } = useSchemaData();
   const { attributes = {} } = schema;
   const { title = '' } = attributes;
 
   const handleSaveBtnClick = () => {
-    axios.post('/api/schema/save', {
+    const token=window.localStorage;
+    request.post('/api/schema/save', {
       schema: JSON.stringify(schema)
-    }).then(() => {})
+    },{headers:{
+      token
+      }}).then(() => {})
   }
 
   const handleResetBtnClick = () => {
-    axios.get('/api/schema/getLatestOne').then((response) => {
-      const data = response?.data?.data;
+    request.get('/api/schema/getLatestOne').then((response) => {
+      const data = response?.data;
       data && changeSchema(parseJsonByString(data.schema, {}));
     });
   }
